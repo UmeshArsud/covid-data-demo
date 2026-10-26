@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CovidWatch – Community and COVID-19 Information</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#feed"><span class="logo">C</span><span class="bn">CovidWatch</span></a>
+  <div class="search"><input id="gs" type="search" placeholder="Search comments or people"></div>
+  <div class="acts" id="auth-out"><a class="btn ghost" href="#login">Log in</a><a class="btn" href="#register">Create account</a></div>
+  <div class="acts" id="auth-in" hidden>
+    <a class="chip" href="#me"><span id="tav"></span><b id="tnm"></b><span class="badge" title="Your comments" id="tcnt">0</span></a>
+    <button class="btn ghost" id="lout">Log out</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="left"><nav id="menu">
+    <a href="#feed" data-v="feed"><i>🏠</i>Community feed</a>
+    <a href="#stats" data-v="stats"><i>📊</i>COVID statistics</a>
+    <a href="#tips" data-v="tips"><i>🛡️</i>Prevention</a>
+    <a href="#me" data-v="me" id="m-me" hidden><i>👤</i>My activity</a>
+    <a href="#lab" data-v="lab"><i>🧪</i>Test lab</a>
+  </nav></aside>
+  <main>
+    <section class="view" id="v-feed"><div class="card" id="composer"></div><div id="posts"></div></section>
+
+    <section class="view" id="v-stats" hidden>
+      <h2>COVID-19 statistics</h2><p class="note">Loaded from the MySQL table <code>covid_stats</code> (sample data).</p>
+      <div class="tiles" id="tiles"></div>
+      <div class="two">
+        <div class="card"><h3>Outcome split</h3><div class="donutwrap"><div class="donut" id="donut"></div><ul class="legend" id="legend"></ul></div></div>
+        <div class="card bars"><h3>Cases by country</h3><div id="bars"></div></div>
+      </div>
+      <div class="card">
+        <div class="filters"><input id="q" placeholder="Search country"><select id="srt"><option value="cases">Sort: total cases</option><option value="deaths">Sort: deaths</option><option value="country">Sort: name</option></select></div>
+        <div class="tw"><table><thead><tr><th>Country</th><th>Cases</th><th>Recovered</th><th>Deaths</th><th>Active</th></tr></thead><tbody id="tb"></tbody></table></div>
+        <p id="none" class="note" hidden>No country matches your search.</p>
+      </div>
+    </section>
+
+    <section class="view" id="v-tips" hidden>
+      <h2>Know the basics</h2>
+      <div class="tiles tips">
+        <div class="card"><h3>🤒 Common symptoms</h3><p>Fever, dry cough, tiredness, sore throat and loss of taste or smell. Some people have no symptoms.</p></div>
+        <div class="card"><h3>🧼 Protect yourself</h3><p>Stay vaccinated, wash hands for 20 seconds, wear a mask in crowded indoor places and ventilate rooms.</p></div>
+        <div class="card"><h3>🏠 If you feel unwell</h3><p>Rest, drink fluids and test if you can. Call a doctor if you have trouble breathing, chest pain or confusion.</p></div>
+        <div class="card"><h3>📰 Reliable sources</h3><p>Check the WHO website and your health ministry before sharing news.</p></div>
+      </div>
+    </section>
+
+    <section class="view" id="v-me" hidden>
+      <div class="card profile" id="pf"></div>
+      <div class="tiles" id="mstats"></div>
+      <h3 id="hist">Comment history</h3><div id="mylist"></div>
+    </section>
+
+    <section class="view" id="v-login" hidden><div class="card auth">
+      <h2>Log in to CovidWatch</h2>
+      <form onsubmit="return false" novalidate>
+        <label for="le">Email</label><input id="le" type="email" autocomplete="email">
+        <label for="lw">Password</label><input id="lw" type="password" autocomplete="current-password">
+        <button class="btn wide" id="lsub">Log in</button>
+      </form><div id="lmsg" class="msg" hidden></div>
+      <p class="note">New here? <a href="#register">Create an account</a></p>
+    </div></section>
+
+    <section class="view" id="v-register" hidden><div class="card auth">
+      <h2>Create your account</h2>
+      <form id="rf" onsubmit="return false" novalidate>
+        <label for="rn">Full name</label><input id="rn" autocomplete="name"><div class="err" id="e-rn"></div>
+        <label for="re">Email</label><input id="re" type="email" autocomplete="email"><div class="err" id="e-re"></div>
+        <label for="rp">Mobile (10 digits)</label><input id="rp" inputmode="numeric" maxlength="10"><div class="err" id="e-rp"></div>
+        <label for="rw">Password</label><input id="rw" type="password" autocomplete="new-password">
+        <div class="meter"><i id="mt"></i></div><div class="err" id="e-rw"></div>
+        <label for="rc">Confirm password</label><input id="rc" type="password" autocomplete="new-password"><div class="err" id="e-rc"></div>
+        <button class="btn wide" id="rsub">Sign up</button>
+      </form><div id="rmsg" class="msg" hidden></div>
+      <p class="note">Already have an account? <a href="#login">Log in</a></p>
+    </div></section>
+
+    <section class="view" id="v-lab" hidden>
+      <h2>Regex test lab</h2>
+      <p>Each row checks one validation rule against a test input. A case passes when the actual result matches the expected result.</p>
+      <button class="btn" id="run">Run all tests</button><div id="sum" class="msg" hidden></div>
+      <div class="card tw" style="margin-top:12px"><table><thead><tr><th>ID</th><th>Field</th><th>Technique</th><th>Input</th><th>Expected</th><th>Actual</th><th>Result</th></tr></thead><tbody id="tr"></tbody></table></div>
+      <p class="note">EP = equivalence partitioning, BVA = boundary value analysis, EG = error guessing.</p>
+    </section>
+  </main>
+  <aside class="right">
+    <div class="card"><h3>Community</h3><div class="stack" id="side"></div></div>
+    <div class="card"><h3>Stay safe</h3><ul class="tipl"><li>Wash hands often</li><li>Ventilate indoor spaces</li><li>Get vaccinated and boosted</li><li>Test if you have symptoms</li></ul></div>
+  </aside>
+</div>
+<div id="toast" class="toast" role="status"></div>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "covidwatch-stqa",
+  "version": "1.0.0",
+  "description": "COVID-19 information portal - STQA mini project (Node.js, Express, MySQL, Jest)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "seed": "node scripts/seed.js",
+    "test": "jest --coverage",
+    "test:unit": "jest tests/unit",
+    "test:integration": "jest tests/integration",
+    "report": "jest --coverage --coverageReporters=text-summary --coverageReporters=json-summary --json --outputFile=docs/jest-results.json && node scripts/report.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "mysql2": "^3.9.7"
+  },
+  "devDependencies": { "jest": "^29.7.0", "supertest": "^7.0.0" },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": ["src/**/*.js", "!src/server.js", "!src/repo/mysql.js"]
+  }
+}
